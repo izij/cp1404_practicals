@@ -19,7 +19,7 @@ def main():
         else:
             print("Invalid choice")
         print(MENU)
-        choice = input(">>> ").upper
+        choice = input(">>> ").upper()
     print("Thank you")
 
 
@@ -34,9 +34,7 @@ def get_valid_score(min, max):
 
 def determine_result(score):
     """Determines result based on score out of 100"""
-    if score < 0 or score > 100:
-        return "Invalid score"
-    elif score >= 90:
+    if score >= 90:
         return "Excellent"
     elif score >= 50:
         return "Passable"
@@ -46,8 +44,7 @@ def determine_result(score):
 
 def print_stars(amount):
     """Prints string of stars"""
-    for star in range(amount):
-        print("*", end="")
+    print("*"*amount)
 
 
 main()
