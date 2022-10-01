@@ -20,3 +20,10 @@ in_file.close()
 result = int(line_1) + int(line_2.strip())
 print(result)
 
+# Question 4
+total = 0
+in_file = open("numbers.txt", 'r')
+for line in in_file:
+    number = int(line.strip())
+    total = total + number
+print(total)
