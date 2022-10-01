@@ -16,3 +16,10 @@ except ValueError:
 except ZeroDivisionError:
     print("Cannot divide by zero!")
 print("Finished.")
+
+"""
+Questions:
+1. ValueError occurs when user enters a non-integer
+2. ZeroDivisionError occurs when user enters 0 as the denominator
+3. Have a while loop to repeat until user enters non-zero integer
+"""
