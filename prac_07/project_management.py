@@ -12,13 +12,14 @@ MENU_STRING = "- (L)oad projects\n" \
               "- (U)pdate project\n" \
               "- (Q)uit"
 FILENAME = "projects.txt"
+HEADER = "Name	Start Date	Priority	Cost Estimate	Completion Percentage"
 
 
 def main():
     """Project management software"""
     print(MENU_STRING)
     projects = load_projects(FILENAME)
-    choice = input(">>>").upper()
+    choice = input(">>> ").upper()
     while choice != 'Q':
         if choice == 'L':
             filename = input("File: ")
@@ -27,8 +28,7 @@ def main():
             filename = input("File: ")
             save_projects(projects, filename)
         elif choice == 'D':
-            pass
-            # display patterns
+            display_projects(projects)
         elif choice == 'F':
             pass
             # filter projects by date
@@ -62,9 +62,24 @@ def load_projects(filename):
 def save_projects(projects, filename):
     """Saves projects into a CSV file"""
     outfile = open(filename, 'w')
+    print(HEADER, file=outfile)  # add heading back into file
     for project in projects:
         print(project, file=outfile)
     outfile.close()
+
+
+def display_projects(projects):
+    print("Incomplete projects:")
+    incomplete_projects = [project for project in projects if not project.is_complete()]
+    for project in incomplete_projects:
+        print(f" {project.name}, start: {project.start_date}, priority {project.priority}, "
+              f"estimate: ${project.cost_estimate:,.2f}, completion: {project.completion_percentage}%")
+    
+    print("Completed projects:")
+    completed_projects = [project for project in projects if project.is_complete()]
+    for project in completed_projects:
+        print(f" {project.name}, start: {project.start_date}, priority {project.priority}, "
+              f"estimate: ${project.cost_estimate:,.2f}, completion: {project.completion_percentage}%")
 
 
 main()
