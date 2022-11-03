@@ -2,7 +2,7 @@
 Project Management 
 """
 
-from project.py import Project
+from project import Project
 
 MENU_STRING = "- (L)oad projects\n" \
               "- (S)ave projects\n" \
@@ -25,7 +25,6 @@ def main():
             projects = load_projects(filename)
         elif choice == 'S':
             save_projects(projects, FILENAME)
-            # save projects
         elif choice == 'D':
             pass
             # display patterns
@@ -50,6 +49,7 @@ def load_projects(filename):
     """Loads project from file and adds to list"""
     projects = []
     in_file = open(filename, "r")
+    in_file.readline()  # Reads header line
     for line in in_file:
         pieces = line.strip().split("\t")
         project = Project(pieces[0], pieces[1], int(pieces[2]), float(pieces[3]), int(pieces[4]))
