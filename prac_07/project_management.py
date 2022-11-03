@@ -33,8 +33,8 @@ def main():
             pass
             # filter projects by date
         elif choice == 'A':
-            pass
-            # add new project
+            print("Lets add a new project")
+            projects.append(get_new_project())
         elif choice == 'U':
             pass
             # update project
@@ -42,7 +42,8 @@ def main():
             print("Invalid choice")
         print(MENU_STRING)
         choice = input(">>> ").upper()
-    save_projects(projects, FILENAME)
+    # TODO: change filename to projects
+    save_projects(projects, "end_projects.txt")
     print("Thank you for using custom-built project management software")
 
 
@@ -69,6 +70,7 @@ def save_projects(projects, filename):
 
 
 def display_projects(projects):
+    """Displays projects in 2 sections, incomplete and complete"""
     print("Incomplete projects:")
     incomplete_projects = [project for project in projects if not project.is_complete()]
     for project in incomplete_projects:
@@ -80,6 +82,16 @@ def display_projects(projects):
     for project in completed_projects:
         print(f" {project.name}, start: {project.start_date}, priority {project.priority}, "
               f"estimate: ${project.cost_estimate:,.2f}, completion: {project.completion_percentage}%")
+
+
+def get_new_project():
+    """Gets a new project"""
+    name = input("Name: ")
+    start_date = input("Start date (dd/mm/yy): ")
+    priority = int(input("Priority: "))
+    cost_estimate = float(input("Cost estimate: $"))
+    percent_complete = int(input("Percent complete: "))
+    return Project(name, start_date, priority, cost_estimate, percent_complete)
 
 
 main()
