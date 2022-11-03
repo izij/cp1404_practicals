@@ -24,7 +24,7 @@ def main():
             filename = input("File: ")
             projects = load_projects(filename)
         elif choice == 'S':
-            pass
+            save_projects(projects, FILENAME)
             # save projects
         elif choice == 'D':
             pass
@@ -42,7 +42,7 @@ def main():
             print("Invalid choice")
         print(MENU_STRING)
         choice = input(">>> ").upper()
-    # save files
+    save_projects(projects, FILENAME)
     print("Thank you for using custom-built project management software")
 
 
@@ -56,6 +56,15 @@ def load_projects(filename):
         projects.append(project)
     in_file.close()
     return projects
+
+
+def save_projects(projects, filename):
+    """Saves movies into a CSV file"""
+    outfile = open(filename, 'w')
+    for project in projects:
+        line = "\t".join(project)
+        print(line, file=outfile)
+    outfile.close()
 
 
 main()
