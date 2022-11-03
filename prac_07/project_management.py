@@ -24,7 +24,8 @@ def main():
             filename = input("File: ")
             projects = load_projects(filename)
         elif choice == 'S':
-            save_projects(projects, FILENAME)
+            filename = input("File: ")
+            save_projects(projects, filename)
         elif choice == 'D':
             pass
             # display patterns
@@ -59,11 +60,10 @@ def load_projects(filename):
 
 
 def save_projects(projects, filename):
-    """Saves movies into a CSV file"""
+    """Saves projects into a CSV file"""
     outfile = open(filename, 'w')
     for project in projects:
-        line = "\t".join(project)
-        print(line, file=outfile)
+        print(project, file=outfile)
     outfile.close()
 
 
