@@ -41,8 +41,7 @@ def main():
             print("Invalid choice")
         print(MENU_STRING)
         choice = input(">>> ").upper()
-    # TODO: change filename to projects
-    save_projects(projects, "end_projects.txt")
+    save_projects(projects, FILENAME)
     print("Thank you for using custom-built project management software")
 
 
