@@ -30,8 +30,8 @@ def main():
         elif choice == 'D':
             display_projects(projects)
         elif choice == 'F':
-            pass
             # filter projects by date
+            pass
         elif choice == 'A':
             print("Lets add a new project")
             projects.append(get_new_project())
