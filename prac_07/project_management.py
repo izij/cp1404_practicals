@@ -98,10 +98,18 @@ def update_project(projects):
     project_choice = int(input("Project choice: "))
     chosen_project = projects[project_choice]
     print(chosen_project.display_project())
-    chosen_project.completion_percentage = int(input("New Percentage: "))
-    chosen_project.priority = int(input("New Priority: "))
+    chosen_project.completion_percentage = int(allow_empty_input("New Percentage: "))
+    chosen_project.priority = int(allow_empty_input("New Priority: "))
     projects[project_choice] = chosen_project
     return projects
+
+
+def allow_empty_input(prompt):
+    try:
+        user_input = input(prompt)
+    except ValueError:
+        pass
+    return user_input
 
 
 main()
