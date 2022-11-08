@@ -36,8 +36,7 @@ def main():
             print("Lets add a new project")
             projects.append(get_new_project())
         elif choice == 'U':
-            pass
-            # update project
+            update_project(projects)
         else:
             print("Invalid choice")
         print(MENU_STRING)
@@ -74,24 +73,35 @@ def display_projects(projects):
     print("Incomplete projects:")
     incomplete_projects = [project for project in projects if not project.is_complete()]
     for project in incomplete_projects:
-        print(f" {project.name}, start: {project.start_date}, priority {project.priority}, "
-              f"estimate: ${project.cost_estimate:,.2f}, completion: {project.completion_percentage}%")
+        print(project.display_project())
     
     print("Completed projects:")
     completed_projects = [project for project in projects if project.is_complete()]
     for project in completed_projects:
-        print(f" {project.name}, start: {project.start_date}, priority {project.priority}, "
-              f"estimate: ${project.cost_estimate:,.2f}, completion: {project.completion_percentage}%")
+        print(project.display_project())
 
 
 def get_new_project():
-    """Gets a new project"""
+    """Gets a new project from user input"""
     name = input("Name: ")
     start_date = input("Start date (dd/mm/yy): ")
     priority = int(input("Priority: "))
     cost_estimate = float(input("Cost estimate: $"))
-    percent_complete = int(input("Percent complete: "))
-    return Project(name, start_date, priority, cost_estimate, percent_complete)
+    completion_percentage = int(input("Percent complete: "))
+    return Project(name, start_date, priority, cost_estimate, completion_percentage)
+
+
+def update_project(projects):
+    """Updates project percentage and priority"""
+    for project in projects:
+        print(projects.index(project), project.display_project())
+    project_choice = int(input("Project choice: "))
+    chosen_project = projects[project_choice]
+    print(chosen_project.display_project())
+    chosen_project.completion_percentage = int(input("New Percentage: "))
+    chosen_project.priority = int(input("New Priority: "))
+    projects[project_choice] = chosen_project
+    return projects
 
 
 main()
