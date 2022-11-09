@@ -10,6 +10,13 @@ def main():
     guitars = load_guitars(FILENAME)
     guitars.sort()
     display_guitars(guitars)
+    choice = input("Add new guitar (Y/N)? ").upper()
+    while choice != "N":
+        guitar = get_new_guitar()
+        guitars.append(guitar)
+        print(f"{guitar.name} ({guitar.year}) : ${guitar.cost:,.2f} added.")
+        choice = input("Add new guitar (Y/N)? ").upper()
+    save_guitars(guitars, FILENAME)
 
 
 def display_guitars(guitars):
@@ -28,6 +35,23 @@ def load_guitars(filename):
         guitars.append(guitar)
     in_file.close()
     return guitars
+
+
+def get_new_guitar():
+    name = input("Name: ")
+    year = int(input("Year: "))
+    cost = float(input("Cost: $"))
+    guitar = Guitar(name, year, cost)
+    return guitar
+
+
+def save_guitars(guitars, filename):
+    """Saves guitars into a CSV file"""
+    outfile = open(filename, 'w')
+    for guitar in guitars:
+        data = [guitar.name, str(guitar.year), str(guitar.cost)]
+        print(",".join(data), file=outfile)
+    outfile.close()
 
 
 main()
