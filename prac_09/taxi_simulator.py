@@ -12,30 +12,37 @@ def main():
     """Taxi simulator program."""
     taxis = [Taxi(100, "Prius"), SilverServiceTaxi(100, "Limo", 2), SilverServiceTaxi(200, "Hummer", 4)]
     current_taxi = None
+    total_bill = 0
     print("Let's drive!")
     print(MENU_STRING)
     menu_choice = input(">>> ").lower()
     while menu_choice != 'q':
         if menu_choice == 'c':
+            print("Taxis available:")
             display_taxis(taxis)
-            taxi_choice = get_valid_taxi(len(taxis) - 1)
-            current_taxi = taxis[taxi_choice]
-        if menu_choice == 'd':
-            pass
+            taxi_choice = get_valid_integer("Choose taxi: ")
+            if taxi_choice < 0 or taxi_choice > len(taxis) - 1:
+                print("Invalid taxi choice")
+            else:
+                current_taxi = taxis[taxi_choice]
+        elif menu_choice == 'd':
+            if current_taxi is None:
+                print("You need to choose a taxi before you can drive")
+            else:
+                current_taxi.start_fare()  # Start new fare for that taxi
+                distance = get_valid_integer("Drive how far? ")
+                current_taxi.drive(distance)
+                trip_cost = current_taxi.get_fare()
+                print(f"Your {current_taxi.name} trip cost you ${trip_cost:.2f}")
+                total_bill += trip_cost
         else:
             print("Invalid option")
-        print(f"Bill to date: $")
+        print(f"Bill to date: ${total_bill:.2f}")
         print(MENU_STRING)
         menu_choice = input(">>> ").lower()
-
-
-def get_valid_taxi(maximum):
-    """Gets a taxi number within the number of taxis."""
-    taxi_choice = get_valid_integer("Choose taxi:")
-    while taxi_choice < 0 or taxi_choice > maximum:
-        print("Invalid taxi choice")
-        taxi_choice = get_valid_integer("Choose taxi:")
-    return taxi_choice
+    print(f"Total trip cost: ${total_bill:.2f}")
+    print("Taxis are now:")
+    display_taxis()
 
 
 def get_valid_integer(prompt):
@@ -52,9 +59,8 @@ def get_valid_integer(prompt):
 
 def display_taxis(taxis):
     """Displays list of taxis with index number"""
-    print("Taxis available:")
     for taxi in taxis:
-        print(taxis.index(taxi), taxi)
+        print(f"{taxis.index(taxi)} - {taxi}")
 
 
 main()
